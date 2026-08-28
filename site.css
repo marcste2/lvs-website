@@ -1,0 +1,276 @@
+/* ================= LVS Site: Tokens + gemeinsames Vokabular =================
+   Wird von allen Seiten geladen (Startseite + Unterseiten). Seitenspezifisches
+   CSS bleibt in der jeweiligen HTML-Datei. */
+
+:root {
+  --sc-canvas:      #F6F3EA;
+  --sc-surface:     #FDFBF4;
+  --sc-ink:         #1B2336;
+  --sc-ink-soft:    #59627A;
+  --sc-accent:      #F2C900;
+  --sc-accent-ink:  #1B2336;
+
+  --lvs-blue:       #0345BF;   /* Druckfarbe Blau: das Original-Blau der alten Website */
+  --lvs-blue-soft:  #3E68CC;
+  --lvs-yellow:     #F7DC00;   /* Logo-Gelb: Header, Versandlabel, Footer */
+  --lvs-paper-2:    #EFEBDD;
+  --lvs-paper-3:    #EAE4D2;
+  --lvs-kraft:      #C79A5F;
+  --chrome-r:       0rem;      /* Platz für den fixierten Lieferschein rechts (nur Startseite) */
+  --hdr-h:          4.1rem;    /* Höhe des Sticky-Headers */
+
+  --sc-font-display: "Archivo", system-ui, sans-serif;
+  --sc-font-text:    "Source Serif 4", Georgia, serif;
+  --sc-font-mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Papier: Schatten halbiert und warm getönt, Kante hell statt dunkel */
+  --sc-shadow-color: 38 30% 18%;
+  --sc-e1: 0 1px 2px hsl(var(--sc-shadow-color) / 0.14),
+           0 2px 6px -1px hsl(var(--sc-shadow-color) / 0.10);
+  --sc-e2: 0 2px 4px hsl(var(--sc-shadow-color) / 0.12),
+           0 8px 18px -4px hsl(var(--sc-shadow-color) / 0.15);
+  --sc-e3: 0 4px 8px hsl(var(--sc-shadow-color) / 0.11),
+           0 18px 40px -8px hsl(var(--sc-shadow-color) / 0.19),
+           0 48px 90px -24px hsl(var(--sc-shadow-color) / 0.15);
+  --sc-edge: inset 0 1px 0 rgba(255,255,255,0.65);
+}
+body { background: var(--sc-canvas); }
+.sc-grain { opacity: 0.05; mix-blend-mode: multiply; }
+
+.sc-display { color: var(--lvs-blue); font-weight: 700; }
+strong { font-weight: 600; }
+
+/* Kapitelgründe: harte Schnitte, keine Interpolation */
+.ch { position: relative; }
+.ch--paper   { background: var(--sc-canvas); }
+.ch--paper2  { background: var(--lvs-paper-2); }
+.ch--paper3  { background: var(--lvs-paper-3); }
+.ch--dark {
+  --sc-canvas:     #0A1B47;
+  --sc-surface:    #142868;
+  --sc-ink:        #F2EFE3;
+  --sc-ink-soft:   #9AA6CB;
+  --sc-accent:     #FFDE2E;
+  --sc-accent-ink: #121A35;
+  --sc-shadow-color: 225 45% 4%;
+  --sc-edge: inset 0 1px 0 rgba(255,255,255,0.08);
+  background: var(--sc-canvas);
+  color: var(--sc-ink);
+}
+.ch--dark .sc-display { color: var(--sc-ink); }
+
+/* ================= Druck-Vokabular ================= */
+.rule-double { height: 7px; border-top: 2px solid var(--lvs-blue); border-bottom: 1px solid var(--lvs-blue); }
+.folio {
+  font-family: var(--sc-font-mono);
+  font-size: var(--sc-t-xs);
+  letter-spacing: var(--sc-track-wide);
+  text-transform: uppercase;
+  color: var(--lvs-blue);
+  display: flex; justify-content: space-between; gap: var(--sc-4); flex-wrap: wrap;
+}
+.intertitle {
+  display: flex; align-items: baseline; gap: var(--sc-4);
+  border-top: 2px solid var(--lvs-blue);
+  padding-top: var(--sc-3);
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+.intertitle .sc-label { color: var(--lvs-blue); }
+.intertitle h1, .intertitle h2 { font-size: var(--sc-t-xl); letter-spacing: var(--sc-track-snug); }
+
+figure { margin: 0; }
+figcaption {
+  font-family: var(--sc-font-mono);
+  font-size: var(--sc-t-xs);
+  color: var(--sc-ink-soft);
+  letter-spacing: 0.02em;
+  padding-top: var(--sc-2);
+  border-top: 1px solid var(--sc-hairline);
+  margin-top: var(--sc-2);
+}
+.fig-frame { background: var(--sc-surface); padding: 10px; box-shadow: var(--sc-e2), var(--sc-edge); }
+.fig-frame img { width: 100%; height: auto; }
+
+.cta-line {
+  font-family: var(--sc-font-display);
+  font-weight: 700;
+  font-size: var(--sc-t-xl);
+  letter-spacing: var(--sc-track-snug);
+  color: var(--lvs-blue);
+  text-decoration-thickness: 3px;
+  text-decoration-color: var(--sc-accent);
+  text-underline-offset: 0.18em;
+  width: fit-content;
+}
+.cta-line:hover { text-decoration-color: var(--lvs-blue); }
+.cta-line:active { transform: translateY(1px); }
+
+/* ================= Sticky Header ================= */
+.site-head {
+  position: sticky; top: 0; z-index: 60;
+  display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.5rem);
+  background: var(--lvs-yellow);
+  border-bottom: 2px solid var(--lvs-blue);
+  padding: 0.5rem var(--sc-gutter);
+  min-height: var(--hdr-h);
+}
+.site-head__brand {
+  display: flex; align-items: center; gap: 0.6rem;
+  text-decoration: none; flex: none;
+}
+.site-head__brand img { width: 3.3rem; height: auto; }
+.site-head__brand span {
+  font-family: var(--sc-font-display); font-weight: 800;
+  font-size: 0.9rem; letter-spacing: var(--sc-track-snug);
+  color: var(--lvs-blue); white-space: nowrap;
+}
+.site-head__nav {
+  display: flex; gap: clamp(0.7rem, 1.3vw, 1.5rem);
+  margin-inline: auto;
+  overflow-x: auto; scrollbar-width: none;
+  min-width: 0;
+  font-family: var(--sc-font-mono);
+  font-size: clamp(0.62rem, 0.5rem + 0.32vw, 0.78rem);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.site-head__nav::-webkit-scrollbar { display: none; }
+.site-head__nav a {
+  color: #2E3852; text-decoration: none; white-space: nowrap;
+  padding-block: 0.35rem; font-weight: 500;
+}
+.site-head__nav a:hover { color: var(--lvs-blue); }
+.site-head__nav a[aria-current="page"] {
+  color: var(--lvs-blue); font-weight: 600;
+  text-decoration: underline; text-decoration-thickness: 3px;
+  text-decoration-color: var(--lvs-blue); text-underline-offset: 0.35em;
+}
+.site-head__tel {
+  flex: none;
+  font-family: var(--sc-font-mono); font-size: var(--sc-t-xs); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--lvs-blue);
+  text-decoration-thickness: 2px; text-decoration-color: var(--lvs-blue);
+  text-underline-offset: 0.3em;
+}
+@media (max-width: 1500px) {
+  .site-head__brand span { display: none; }
+}
+@media (max-width: 860px) {
+  .site-head { gap: 0.9rem; }
+  .site-head__brand img { width: 2.8rem; }
+  .site-head__tel { display: none; }
+}
+
+/* ================= Unterseiten ================= */
+.page { padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(4rem, 9vw, 8rem); }
+.page-grid {
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(2rem, 6vw, 6rem); align-items: start;
+}
+.page .prose { font-size: var(--sc-t-base); }
+.page .prose p { margin: 0 0 var(--sc-4); color: var(--sc-ink); max-width: var(--sc-measure); }
+.page .prose .quiet { color: var(--sc-ink-soft); }
+.page h2.sub {
+  font-family: var(--sc-font-display); font-weight: 700;
+  font-size: var(--sc-t-lg); color: var(--lvs-blue);
+  letter-spacing: var(--sc-track-snug);
+  margin: var(--sc-7) 0 var(--sc-3);
+}
+.tick { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem 2.5rem; }
+.tick--cols { grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+.tick li { position: relative; padding-left: 1.3em; color: var(--sc-ink); text-wrap: pretty; }
+.tick li::before {
+  content: ""; position: absolute; left: 0; top: 0.42em;
+  width: 0.55em; height: 0.55em; background: var(--sc-accent);
+  outline: 1px solid var(--lvs-blue); outline-offset: 1px;
+}
+.page-figs { display: grid; gap: var(--sc-6); align-content: start; }
+.page-cta {
+  border-top: 2px solid var(--lvs-blue);
+  margin-top: clamp(3rem, 7vw, 5rem); padding-top: var(--sc-5);
+  display: grid; gap: var(--sc-3);
+}
+.page-cta .lede { font-size: var(--sc-t-lg); color: var(--sc-ink); max-width: 46ch; margin: 0; }
+/* ================= Rechtsseiten ================= */
+.legal { font-size: var(--sc-t-base); }
+.legal p { max-width: 72ch; margin: 0 0 var(--sc-4); color: var(--sc-ink); text-wrap: pretty; }
+.legal strong { color: var(--lvs-blue); font-weight: 700; }
+.legal ul, .legal ol { max-width: 70ch; color: var(--sc-ink); padding-left: 1.2em; margin: 0 0 var(--sc-4); }
+.legal li { margin-bottom: 0.35rem; }
+
+/* ================= Footer: Information / Kontakt / Anfahrt ================= */
+.site-footer {
+  background: var(--lvs-yellow);
+  border-top: 2px solid var(--lvs-blue);
+  padding: clamp(2.5rem, 6vw, 4.5rem) var(--sc-gutter) var(--sc-5);
+  color: #1B2336;
+}
+.site-footer__grid {
+  max-width: var(--sc-maxw); margin-inline: auto;
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.site-footer h2 {
+  font-family: var(--sc-font-mono); font-size: var(--sc-t-xs); font-weight: 600;
+  text-transform: uppercase; letter-spacing: var(--sc-track-wide);
+  color: var(--lvs-blue);
+  border-bottom: 2px solid var(--lvs-blue);
+  padding-bottom: 0.5rem; margin: 0 0 var(--sc-4);
+}
+.foot-links { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+.foot-links a {
+  font-family: var(--sc-font-display); font-weight: 700; font-size: var(--sc-t-base);
+  color: var(--lvs-blue);
+  text-decoration-thickness: 2px; text-decoration-color: var(--lvs-blue);
+  text-underline-offset: 0.2em;
+}
+.foot-contact { margin: 0 0 var(--sc-4); font-size: var(--sc-t-base); line-height: 1.6; }
+.foot-contact a { color: var(--lvs-blue); font-weight: 600; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+.map-frame {
+  background: var(--sc-surface); padding: 8px;
+  border: 1px solid var(--lvs-blue);
+  box-shadow: 0 2px 4px hsl(45 60% 20% / 0.15), 0 12px 28px -8px hsl(45 60% 20% / 0.25);
+}
+.map-frame iframe { display: block; width: 100%; aspect-ratio: 16 / 10; border: 0; }
+.map-consent {
+  aspect-ratio: 16 / 10;
+  display: grid; place-content: center; gap: var(--sc-3);
+  text-align: center; padding: var(--sc-4);
+  background: var(--sc-canvas);
+}
+.map-consent p {
+  margin: 0; max-width: 34ch;
+  font-family: var(--sc-font-mono); font-size: var(--sc-t-xs);
+  color: #4A5266; line-height: 1.5;
+}
+.map-consent button {
+  justify-self: center; cursor: pointer;
+  font-family: var(--sc-font-display); font-weight: 700; font-size: var(--sc-t-sm);
+  color: var(--sc-surface); background: var(--lvs-blue);
+  border: 0; border-radius: var(--sc-r-sm);
+  padding: 0.55em 1.2em;
+  transition: transform 140ms var(--sc-ease-out), background 140ms var(--sc-ease-out);
+}
+.map-consent button:hover { background: #0A3AA0; }
+.map-consent button:active { transform: translateY(1px); }
+.map-consent a {
+  justify-self: center;
+  font-family: var(--sc-font-mono); font-size: var(--sc-t-xs);
+  color: var(--lvs-blue);
+}
+.site-footer__bottom {
+  max-width: var(--sc-maxw); margin: clamp(2rem, 5vw, 3.5rem) auto 0;
+  border-top: 1px solid rgba(3, 69, 191, 0.35);
+  padding-top: var(--sc-4);
+  font-family: var(--sc-font-mono); font-size: var(--sc-t-xs);
+  color: #4A5266;
+  display: flex; justify-content: space-between; gap: var(--sc-4); flex-wrap: wrap;
+}
+@media (max-width: 960px) {
+  .site-footer__grid { grid-template-columns: 1fr; }
+  .site-footer { padding-bottom: 4.5rem; } /* Platz für die Lieferschein-Bottom-Bar */
+}
+@media (max-width: 860px) {
+  .page-grid { grid-template-columns: 1fr; }
+}

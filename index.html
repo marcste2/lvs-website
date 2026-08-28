@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LVS Lohnverpackungsservice · Konfektionierung &amp; Fulfillment, Hennersdorf bei Wien</title>
+<meta name="description" content="Konfektionierung, Lohnverpackung und Fulfillment aus Hennersdorf bei Wien. LVS Lohnverpackungsservice GmbH: Wir (ver)packen's.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230345BF'/><rect x='7' y='10' width='18' height='13' rx='2' fill='%23F7DC00'/><path d='M7 14h18' stroke='%230345BF' stroke-width='2'/></svg>">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="scrollcraft.css">
+<link rel="stylesheet" href="site.css">
+<style>
+  /* ================= Startseite (Tokens + gemeinsames Vokabular: site.css) == */
+
+  /* ================= Titelseite ================= */
+  .cover { min-height: calc(100svh - var(--hdr-h)); display: flex; flex-direction: column; justify-content: space-between; padding-block: var(--sc-5) var(--sc-8); }
+  .cover__mast { display: grid; gap: var(--sc-2); }
+  .cover__main { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: clamp(3rem, 8vw, 9rem); align-items: center; }
+  .cover__logo { width: clamp(10rem, 17vw, 15rem); height: auto; justify-self: end; }
+  .cover__body { display: grid; gap: var(--sc-6); max-width: 62rem; }
+  .cover__body h1 { font-size: var(--sc-t-4xl); }
+  .cover__stand { font-size: var(--sc-t-lg); line-height: 1.5; max-width: 46ch; color: var(--sc-ink); }
+  .cover__foot { display: grid; gap: var(--sc-3); }
+  .cover__alt { font-family: var(--sc-font-mono); font-size: var(--sc-t-sm); color: var(--sc-ink-soft); }
+  .cover__alt a { color: var(--lvs-blue); }
+
+  /* ================= Kapitel: Spreads ================= */
+  .spread { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 6vw, 6rem); align-items: start; }
+  .spread--flip { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .prose { font-size: var(--sc-t-base); max-width: var(--sc-measure); }
+  .prose p { margin: 0 0 var(--sc-4); color: var(--sc-ink); }
+  .prose .quiet { color: var(--sc-ink-soft); }
+  .turn {
+    font-family: var(--sc-font-display); font-weight: 700;
+    font-size: var(--sc-t-xl); color: var(--lvs-blue);
+    border-top: 1px solid var(--sc-hairline-strong);
+    padding-top: var(--sc-5); margin-top: var(--sc-6);
+  }
+
+  /* ================= Packstraße (Peak) ================= */
+  .pack-stage { display: grid; align-content: center; }
+  .pack-grid {
+    width: 100%; max-width: var(--sc-maxw); margin-inline: auto; padding-inline: var(--sc-gutter);
+    padding-block: calc(var(--hdr-h) + 1.5rem) 1.5rem;
+    display: grid; grid-template-columns: minmax(15rem, 22rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem); align-items: center; height: 100%;
+  }
+  .stations { display: grid; gap: clamp(0.8rem, 1.9vh, 1.4rem); align-content: center; }
+  .station { display: grid; grid-template-columns: auto 1fr; gap: var(--sc-3); align-items: baseline; }
+  .station__no {
+    font-family: var(--sc-font-mono); font-size: var(--sc-t-xs); font-weight: 600;
+    color: var(--sc-accent); border: 1px solid currentColor; border-radius: var(--sc-r-sm);
+    padding: 0.1em 0.45em;
+  }
+  .station__name { font-family: var(--sc-font-display); font-weight: 700; font-size: var(--sc-t-lg); letter-spacing: var(--sc-track-snug); }
+  .station__note { grid-column: 2; font-size: var(--sc-t-sm); line-height: 1.35; color: var(--sc-ink-soft); font-family: var(--sc-font-text); }
+  .pack-close { margin-top: clamp(1rem, 2.6vh, 2rem); }
+  .pack-close .sc-display { color: var(--sc-ink); font-size: var(--sc-t-xl); }
+
+  /* Das Objekt: Montage unter dem Rad. Alle Fenster laufen über --sc-p. */
+  .parcel-wrap { display: grid; place-items: center; }
+  .parcel { width: min(50vw, 64vh, 38rem); aspect-ratio: 1; position: relative; }
+  .parcel svg { width: 100%; height: 100%; overflow: visible; }
+
+  #packstrasse {
+    --p: var(--sc-p, 0);
+    --arrive: clamp(0, (var(--p) - 0.015) * 6, 1);
+    --foil:  clamp(0, (var(--p) - 0.16) * 6.5, 1);
+    --lab:   clamp(0, (var(--p) - 0.38) * 7,   1);
+    --boxf:  clamp(0, (var(--p) - 0.56) * 9,   1);
+    --lid:   clamp(0, (var(--p) - 0.68) * 13,  1);
+    --tape:  clamp(0, (var(--p) - 0.76) * 13,  1);
+    --ship:  clamp(0, (var(--p) - 0.85) * 15,  1);
+    --slide: calc(var(--p) * 3.5rem - 1.75rem);
+  }
+  .parcel__g { transform: translateX(var(--slide)); }
+  .pk-foil    { opacity: var(--foil); }
+  .pk-foil-gloss { transform: translateX(calc((1 - var(--foil)) * -140px)); opacity: calc(var(--foil) * 0.9); }
+  .pk-label   { opacity: var(--lab); transform: translate(calc((1 - var(--lab)) * 90px), calc((1 - var(--lab)) * -14px)) rotate(calc((1 - var(--lab)) * 6deg)); }
+  .pk-boxfront{ opacity: var(--boxf); transform: translateY(calc((1 - var(--boxf)) * 110px)); }
+  .pk-lid     { opacity: var(--lid); transform: translateY(calc((1 - var(--lid)) * -90px)); }
+  .pk-tape    { transform: scaleX(var(--tape)); transform-origin: 142px 224px; opacity: var(--tape); }
+  .pk-ship    { opacity: var(--ship); transform: scale(calc(1.25 - var(--ship) * 0.25)) rotate(calc((1 - var(--ship)) * -5deg)); transform-origin: 300px 258px; }
+  .pk-inner   {
+    opacity: calc(var(--arrive) * (1 - var(--boxf) * 0.85));
+    transform: translateX(calc((1 - var(--arrive)) * -150px));
+  }
+  .parcel [class^="pk-"] { will-change: transform, opacity; }
+
+  /* Stationslicht aus demselben Takt */
+  #packstrasse .station { opacity: 0.34; transition: opacity 200ms var(--sc-ease-out); }
+  #packstrasse .station.is-on { opacity: 1; }
+
+  /* ================= Betrieb ================= */
+  .betrieb-grid {
+    width: 100%; max-width: var(--sc-maxw); margin-inline: auto; padding-inline: var(--sc-gutter);
+    display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 5vw, 5rem); align-items: center; height: 100%;
+  }
+  .betrieb-head { position: absolute; inset: 0 0 auto 0; padding-top: calc(var(--hdr-h) + var(--sc-4)); }
+  .clipfig { position: relative; }
+  .clipfig__frame { position: relative; aspect-ratio: 16 / 9; overflow: clip; background: var(--lvs-paper-2); box-shadow: var(--sc-e3); }
+  .stat-stack { display: grid; gap: var(--sc-5); }
+  .stat { border-top: 1px solid var(--sc-hairline-strong); padding-top: var(--sc-3); }
+  .stat__num { font-family: var(--sc-font-display); font-weight: 800; font-size: var(--sc-t-3xl); line-height: 1; color: var(--lvs-blue); font-variant-numeric: tabular-nums; }
+  .stat__label { font-family: var(--sc-font-mono); font-size: var(--sc-t-xs); text-transform: uppercase; letter-spacing: var(--sc-track-wide); color: var(--sc-ink-soft); margin-top: var(--sc-2); }
+  .stat__line { font-size: var(--sc-t-base); color: var(--sc-ink); margin-top: var(--sc-1); }
+
+  /* Leistungen */
+  .leistungen { padding-block: var(--sc-6) var(--sc-section); }
+  .svc-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(2rem, 6vw, 6rem); }
+  .svc dl { margin: 0; display: grid; gap: var(--sc-5); }
+  .svc dt { font-family: var(--sc-font-display); font-weight: 700; font-size: var(--sc-t-lg); color: var(--lvs-blue); letter-spacing: var(--sc-track-snug); }
+  .svc dd { margin: var(--sc-1) 0 0; color: var(--sc-ink-soft); max-width: 56ch; }
+  .svc-figs { display: grid; gap: var(--sc-6); align-content: start; }
+  .band { margin-top: clamp(3rem, 7vw, 6rem); }
+  .band img { width: 100%; height: auto; }
+
+  /* ================= Stimmen ================= */
+  .quotes { display: grid; gap: clamp(3rem, 6vw, 5rem); }
+  .quote { max-width: 56rem; }
+  .quote--right { margin-left: auto; text-align: left; }
+  .quote blockquote {
+    margin: 0;
+    font-family: var(--sc-font-text); font-style: italic; font-weight: 400;
+    font-size: var(--sc-t-xl); line-height: 1.35; color: var(--sc-ink);
+    text-wrap: pretty;
+  }
+  .quote blockquote::before { content: "„"; color: var(--lvs-blue); font-weight: 600; }
+  .quote blockquote::after { content: "“"; color: var(--lvs-blue); font-weight: 600; }
+  .quote figcaption { border: 0; padding: 0; margin-top: var(--sc-4); display: flex; gap: var(--sc-3); align-items: center; flex-wrap: wrap; }
+  .stars { color: var(--sc-accent); letter-spacing: 0.15em; font-size: var(--sc-t-base); }
+  .quote cite { font-style: normal; font-family: var(--sc-font-mono); font-size: var(--sc-t-xs); text-transform: uppercase; letter-spacing: var(--sc-track-wide); color: var(--sc-ink-soft); }
+  .google-line { margin-top: clamp(2.5rem, 5vw, 4rem); font-family: var(--sc-font-mono); font-size: var(--sc-t-sm); }
+  .google-line a { color: var(--lvs-blue); }
+
+  /* ================= Schluss: Versandlabel ================= */
+  .close-stage { display: grid; align-content: center; }
+  .close-grid {
+    width: 100%; max-width: var(--sc-maxw); margin-inline: auto; padding-inline: var(--sc-gutter);
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(2rem, 6vw, 6rem); align-items: center;
+  }
+  .close-copy h2 { font-size: var(--sc-t-3xl); }
+  .close-copy p { font-size: var(--sc-t-lg); color: var(--sc-ink); max-width: 40ch; }
+  .label-card {
+    background: var(--lvs-yellow); color: var(--lvs-blue);
+    box-shadow: var(--sc-e3);
+    padding: clamp(1.25rem, 3vw, 2.5rem);
+    border: 1px solid var(--lvs-blue);
+    display: grid; gap: var(--sc-4);
+    position: relative;
+    transform: rotate(-0.6deg);
+  }
+  .label-card__head { display: flex; justify-content: space-between; align-items: start; gap: var(--sc-4); border-bottom: 2px solid var(--lvs-blue); padding-bottom: var(--sc-3); }
+  .label-card__head .name { font-family: var(--sc-font-display); font-weight: 800; font-size: var(--sc-t-lg); letter-spacing: var(--sc-track-snug); }
+  .label-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--sc-3); font-family: var(--sc-font-mono); font-size: var(--sc-t-sm); align-items: baseline; }
+  .label-row .k { font-size: var(--sc-t-xs); text-transform: uppercase; letter-spacing: var(--sc-track-wide); color: #4A5266; }
+  .label-cta {
+    font-family: var(--sc-font-display); font-weight: 800;
+    font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+    color: var(--lvs-blue);
+    text-decoration-thickness: 4px; text-decoration-color: var(--sc-accent); text-underline-offset: 0.18em;
+    width: fit-content;
+  }
+  .label-cta:hover { text-decoration-color: var(--lvs-blue); }
+  .label-cta:active { transform: translateY(1px); }
+  .helmi-stamp {
+    width: clamp(6rem, 9vw, 8rem); flex: none;
+    display: grid; place-items: center; transform: rotate(3deg);
+  }
+  .helmi-stamp img { width: 100%; height: auto; }
+  .barcode { height: 2.4rem; background: repeating-linear-gradient(90deg, var(--lvs-blue) 0 2px, transparent 2px 5px, var(--lvs-blue) 5px 8px, transparent 8px 10px, var(--lvs-blue) 10px 11px, transparent 11px 15px); opacity: 0.85; }
+
+  /* ================= Der Lieferschein (Signature Move) ================= */
+  .docket {
+    position: fixed; top: 50%; right: clamp(0.6rem, 1.6vw, 1.6rem);
+    transform: translateY(-50%) rotate(0.8deg);
+    z-index: var(--sc-z-chrome);
+    width: 13.5rem;
+    background: #FCF9F1; color: #1C2434;
+    box-shadow: 0 2px 4px hsl(38 30% 18% / 0.16), 0 14px 34px -8px hsl(38 30% 18% / 0.28);
+    border: 1px solid rgba(3, 69, 191, 0.25);
+    font-family: var(--sc-font-mono);
+    transition: opacity 500ms var(--sc-ease-out), transform 500ms var(--sc-ease-out);
+  }
+  .docket--gone { opacity: 0; transform: translateY(-46%) rotate(2.5deg); pointer-events: none; }
+  .docket__head { border-bottom: 2px solid #0345BF; padding: 0.55rem 0.8rem 0.45rem; color: #0345BF; display: flex; justify-content: space-between; align-items: baseline; }
+  .docket__title { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em; }
+  .docket__date { font-size: 0.6rem; color: #59627A; }
+  .docket__list { list-style: none; margin: 0; padding: 0.35rem 0 0.45rem; }
+  .docket__list a {
+    display: grid; grid-template-columns: 1.15rem 1fr; gap: 0.5rem; align-items: center;
+    padding: 0.3rem 0.8rem; font-size: 0.64rem; letter-spacing: 0.05em;
+    text-decoration: none; color: #59627A;
+  }
+  .docket__list a:hover { color: #0345BF; }
+  .docket__box { width: 0.85rem; height: 0.85rem; border: 1px solid #8A93AC; border-radius: 2px; display: grid; place-items: center; position: relative; }
+  .docket__tick {
+    position: absolute; inset: -0.34rem; display: grid; place-items: center;
+    color: #B07E00; font-size: 0.98rem; font-weight: 600;
+    opacity: 0; transform: scale(1.7) rotate(-14deg);
+  }
+  .is-stamped .docket__tick { opacity: 1; transform: scale(1) rotate(-8deg); transition: opacity 160ms var(--sc-ease-out), transform 260ms var(--sc-ease-out); }
+  .is-stamped { color: #1C2434 !important; }
+  .docket__tel { display: block; border-top: 1px solid rgba(3,69,191,0.25); padding: 0.5rem 0.8rem 0.55rem; font-size: 0.64rem; color: #0345BF; text-decoration-thickness: 2px; text-decoration-color: #E9B400; text-underline-offset: 0.2em; }
+
+  /* ================= Responsiv ================= */
+  @media (min-width: 961px) {
+    :root { --chrome-r: 12.5rem; }
+    .sc-wrap, .pack-grid, .betrieb-grid, .close-grid {
+      padding-right: calc(var(--sc-gutter) + var(--chrome-r));
+    }
+  }
+  @media (max-width: 1180px) {
+    .docket { width: 11.5rem; }
+  }
+  @media (max-width: 960px) {
+    .docket {
+      top: auto; bottom: 0; right: 0; left: 0; width: auto;
+      transform: none; border: 0; border-top: 1px solid rgba(3,69,191,0.3);
+      display: flex; align-items: center; gap: 0.25rem;
+    }
+    .docket--gone { transform: translateY(100%); }
+    .docket__head { border: 0; padding: 0.5rem 0.6rem; }
+    .docket__date { display: none; }
+    .docket__list { display: flex; flex: 1; padding: 0; justify-content: space-evenly; }
+    .docket__list a { padding: 0.5rem 0.2rem; grid-template-columns: auto; }
+    .docket__list .docket__name { display: none; }
+    .docket__tel { border: 0; padding: 0.5rem 0.8rem; white-space: nowrap; }
+    main { padding-bottom: 3rem; }
+  }
+  @media (max-width: 860px) {
+    .cover__body h1 { font-size: var(--sc-t-2xl); }
+    .cover__main { grid-template-columns: 1fr; }
+    .cover__logo { width: 9rem; justify-self: start; order: -1; }
+    .spread, .spread--flip, .svc-grid, .betrieb-grid, .close-grid { grid-template-columns: 1fr; }
+    .betrieb-grid { align-content: center; gap: 1.25rem; }
+    .pack-grid { grid-template-columns: 1fr; align-content: center; gap: 1rem; }
+    .parcel { width: min(78vw, 44vh); margin-inline: auto; }
+    .stations { gap: 0.6rem; }
+    .station__note { display: none; }
+    .station__name { font-size: var(--sc-t-base); }
+    .pack-close .sc-display { font-size: var(--sc-t-xl); }
+    .quote--right { margin-left: 0; }
+    .close-foot { position: static; padding: var(--sc-5) 0 0; }
+  }
+
+  /* ================= Reduzierte Bewegung ================= */
+  @media (prefers-reduced-motion: reduce) {
+    #packstrasse { --arrive: 1; --foil: 1; --lab: 1; --boxf: 1; --lid: 1; --tape: 1; --ship: 1; --slide: 0px; }
+    #packstrasse .station { opacity: 1; }
+    .parcel [class^="pk-"] { transform: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sc-grain" aria-hidden="true"></div>
+
+<header class="site-head">
+  <a class="site-head__brand" href="index.html">
+    <img src="assets/logo.webp" width="1100" height="1058" alt="">
+    <span>LVS Lohnverpackungsservice</span>
+  </a>
+  <nav class="site-head__nav" aria-label="Hauptnavigation">
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="leistungen.html">Leistungen</a>
+    <a href="konfektionierung.html">Konfektionierung</a>
+    <a href="fulfillmentloesungen.html">Fulfillmentlösungen</a>
+    <a href="konzeption.html">Konzeption</a>
+    <a href="speditionsabwicklung.html">Speditionsabwicklung</a>
+    <a href="kontakt.html">Kontakt</a>
+  </nav>
+  <a class="site-head__tel" href="tel:+43223581204">Jetzt anrufen</a>
+</header>
+
+<!-- Der Lieferschein: Signatur-Chrome. Stempelt Stationen ab, springt Kapitel an. -->
+<aside class="docket" id="docket" aria-label="Lieferschein: Fortschritt und Kapitelnavigation">
+  <div class="docket__head">
+    <span class="docket__title">LIEFERSCHEIN</span>
+    <span class="docket__date" id="docket-date"></span>
+  </div>
+  <ol class="docket__list">
+    <li><a href="#start" data-station="1"><span class="docket__box"><span class="docket__tick">✓</span></span><span class="docket__name">Angenommen</span></a></li>
+    <li><a href="#problem" data-station="2"><span class="docket__box"><span class="docket__tick">✓</span></span><span class="docket__name">Übernommen</span></a></li>
+    <li><a href="#packstrasse" data-station="3"><span class="docket__box"><span class="docket__tick">✓</span></span><span class="docket__name">Konfektioniert</span></a></li>
+    <li><a href="#packstrasse" data-station="4"><span class="docket__box"><span class="docket__tick">✓</span></span><span class="docket__name">Etikettiert</span></a></li>
+    <li><a href="#betrieb" data-station="5"><span class="docket__box"><span class="docket__tick">✓</span></span><span class="docket__name">Verpackt</span></a></li>
+    <li><a href="#kontakt" data-station="6"><span class="docket__box"><span class="docket__tick">✓</span></span><span class="docket__name">Versandbereit</span></a></li>
+  </ol>
+  <a class="docket__tel" href="tel:+43223581204">Jetzt anrufen</a>
+</aside>
+
+<main id="top">
+
+  <!-- ============ TITELSEITE ============ -->
+  <section id="start" class="ch ch--paper">
+    <div class="sc-wrap cover">
+      <header class="cover__mast" data-sc-in>
+        <p class="folio"><span>LVS Lohnverpackungsservice GmbH</span><span>Hauptstraße 13-15 · 2332 Hennersdorf bei Wien</span></p>
+        <div class="rule-double" aria-hidden="true"></div>
+      </header>
+      <div class="cover__main">
+        <div class="cover__body" data-sc-in data-sc-stagger="90">
+          <p class="sc-label" style="color: var(--lvs-blue);">Ihr Partner für Lohnverpackung und Fulfillmentlösungen</p>
+          <h1 class="sc-display sc-display--xl">Wir (ver)packen's.</h1>
+          <p class="cover__stand">Konfektionierung, Lohnverpackung und Fulfillment aus Hennersdorf bei Wien. Für Unternehmen, die ihre Zeit lieber in Produkt und Vertrieb stecken als in Folie, Etiketten und Kartons.</p>
+        </div>
+        <img class="cover__logo" data-sc-in src="assets/logo.webp" width="1100" height="1058" alt="LVS-Logo: Helmi, der lachende Karton mit zwei Daumen hoch, darüber der Schriftzug Wir (ver)packen's">
+      </div>
+      <footer class="cover__foot" data-sc-in>
+        <a class="cta-line" href="tel:+43223581204">Jetzt anrufen: +43 2235 81204</a>
+        <p class="cover__alt">Mobil <a href="tel:+436641493636">+43 664 149 36 36</a> · Diskret und zuverlässig, für kleine, mittlere und große Geschäftspartner.</p>
+        <div class="rule-double" aria-hidden="true"></div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ============ KAPITEL: DAS PROBLEM ============ -->
+  <section id="problem" class="ch ch--paper2 sc-section">
+    <div class="sc-wrap">
+      <div class="intertitle" data-sc-in>
+        <span class="sc-label">Kapitel eins</span>
+        <h2 class="sc-display">Die Zeit, die es frisst</h2>
+      </div>
+      <div class="spread">
+        <div class="prose" data-sc-in data-sc-stagger="80">
+          <p><strong>Verpackung und Versand gehören zu jedem Unternehmen.</strong> Aber die Handgriffe dahinter sind zeitintensiv: Beilagen einlegen, Folie schweißen, Etiketten drucken, Sets kombinieren, Retouren prüfen. Diese Zeit fehlt dann genau dort, wo Ihr Geschäft eigentlich stattfindet, nämlich in Produktion, Entwicklung und Vertrieb.</p>
+          <p class="quiet">Manchmal fehlt auch schlicht der Platz, das Personal oder die Maschine. Genau dort setzen wir an: als diskreter, zuverlässiger Problemlöser, der übernimmt, was Sie aufhält. Schnell, flexibel, in jeder Größenordnung, Kleinmengen auch per Hand.</p>
+          <p class="turn">Ab hier übernehmen wir.</p>
+        </div>
+        <figure data-sc-reveal="up" data-sc-reveal-at="0.1 0.45">
+          <div class="fig-frame">
+            <img src="assets/chaos.webp" width="1920" height="1072" alt="Wareneingang mit offenen Kartons, Folienrollen und Beilagen auf Paletten und Werktischen">
+          </div>
+          <figcaption>Wareneingang, bevor wir übernehmen: Ware, Folie, Beilagen, alles gleichzeitig.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PEAK: DIE PACKSTRASSE ============ -->
+  <section id="packstrasse" class="ch ch--dark" data-sc-act="pin" data-sc-span="3.6">
+    <div data-sc-stage class="pack-stage">
+      <div class="pack-grid">
+        <div class="stations">
+          <p class="sc-label" style="color: var(--sc-accent);" data-sc-cue="0 1 0 0.08" data-sc-rise="0">Die Packstraße</p>
+          <div class="station" data-on="0"><span class="station__no">01</span><span class="station__name">Übernahme</span><span class="station__note">Wareneingang geprüft, qualitativ und quantitativ.</span></div>
+          <div class="station" data-on="0.16"><span class="station__no">02</span><span class="station__name">Folie</span><span class="station__note">Einschweißen, Skinnen, Sleeven: versiegelt in Sekunden.</span></div>
+          <div class="station" data-on="0.38"><span class="station__no">03</span><span class="station__name">Etikett</span><span class="station__note">Etikettendruck, EAN- und Preiskontrolle inklusive.</span></div>
+          <div class="station" data-on="0.56"><span class="station__no">04</span><span class="station__name">Karton &amp; Band</span><span class="station__note">Set gepackt, verschlossen, transportsicher.</span></div>
+          <div class="station" data-on="0.85"><span class="station__no">05</span><span class="station__name">Versandlabel</span><span class="station__note">Fertig für die Rampe.</span></div>
+          <div class="pack-close" data-sc-cue="0.66 1 0.12 0.28">
+            <h2 class="sc-display sc-display--md">Aus Ihrer Ware wird ein fertiges Produkt.</h2>
+          </div>
+        </div>
+        <div class="parcel-wrap">
+          <div class="parcel" role="img" aria-label="Illustration: Ein Produktstapel wird Schritt für Schritt foliert, etikettiert, verpackt und mit Versandlabel versehen">
+            <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- Rollenbahn -->
+              <line x1="20" y1="470" x2="580" y2="470" stroke="currentColor" stroke-opacity="0.35" stroke-width="2"/>
+              <g stroke="currentColor" stroke-opacity="0.22" stroke-width="2">
+                <circle cx="70" cy="484" r="9"/><circle cx="150" cy="484" r="9"/><circle cx="230" cy="484" r="9"/>
+                <circle cx="310" cy="484" r="9"/><circle cx="390" cy="484" r="9"/><circle cx="470" cy="484" r="9"/><circle cx="530" cy="484" r="9"/>
+              </g>
+              <g class="parcel__g">
+                <!-- Produktstapel (immer da: der Grund des Akts) -->
+                <g class="pk-inner">
+                  <rect x="190" y="330" width="110" height="130" rx="6" fill="#C79A5F"/>
+                  <rect x="300" y="330" width="110" height="130" rx="6" fill="#B8894E"/>
+                  <rect x="228" y="220" width="140" height="110" rx="6" fill="#D2A76C"/>
+                  <path d="M190 360h110M300 360h110M228 250h140" stroke="#8A6234" stroke-width="3"/>
+                  <!-- Folie -->
+                  <g class="pk-foil">
+                    <rect x="180" y="210" width="240" height="260" rx="10" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="2"/>
+                    <path class="pk-foil-gloss" d="M225 210 L275 210 L235 470 L185 470 Z" fill="#FFFFFF" fill-opacity="0.18"/>
+                  </g>
+                  <!-- Etikett -->
+                  <g class="pk-label">
+                    <rect x="255" y="280" width="120" height="74" rx="4" fill="#FCF9F1"/>
+                    <path d="M268 298h94M268 314h94M268 330h60" stroke="#0345BF" stroke-width="5" stroke-linecap="round"/>
+                  </g>
+                </g>
+                <!-- Karton -->
+                <g class="pk-boxfront">
+                  <rect x="150" y="230" width="300" height="240" rx="8" fill="#C79A5F"/>
+                  <path d="M150 260h300" stroke="#8A6234" stroke-width="3"/>
+                  <path d="M300 260v210" stroke="#8A6234" stroke-width="2" stroke-opacity="0.5"/>
+                </g>
+                <g class="pk-lid">
+                  <path d="M142 236 L300 196 L458 236 L300 262 Z" fill="#D2A76C" stroke="#8A6234" stroke-width="2"/>
+                </g>
+                <g class="pk-tape">
+                  <rect x="142" y="212" width="316" height="24" rx="4" fill="#FFDE2E" transform="rotate(-6.5 300 224)"/>
+                </g>
+                <!-- Versandlabel -->
+                <g class="pk-ship">
+                  <rect x="220" y="300" width="160" height="96" rx="4" fill="#FCF9F1" stroke="#0345BF" stroke-width="2"/>
+                  <path d="M236 322h128M236 338h128M236 354h84" stroke="#0345BF" stroke-width="5" stroke-linecap="round"/>
+                  <path d="M236 376h4v12h-4zM244 376h2v12h-2zM250 376h5v12h-5zM259 376h2v12h-2zM265 376h3v12h-3zM272 376h6v12h-6zM282 376h2v12h-2zM288 376h4v12h-4zM296 376h2v12h-2zM302 376h5v12h-5zM311 376h3v12h-3zM318 376h6v12h-6zM328 376h2v12h-2zM334 376h4v12h-4z" fill="#0345BF"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KAPITEL: DER BETRIEB ============ -->
+  <section id="betrieb" class="ch ch--paper" data-sc-act="scrub" data-sc-span="2.4">
+    <div data-sc-stage>
+      <div class="betrieb-head sc-wrap">
+        <div class="intertitle" style="margin-bottom: 0;" data-sc-cue="0 1 0 0.1" data-sc-rise="0">
+          <span class="sc-label">Kapitel zwei</span>
+          <h2 class="sc-display">Der Betrieb dahinter</h2>
+        </div>
+      </div>
+      <div class="betrieb-grid">
+        <figure class="clipfig" data-sc-cue="0 1 0 0.08" data-sc-rise="0">
+          <div class="clipfig__frame">
+            <img class="sc-stage__poster" src="assets/lager-poster.webp" width="1280" height="720" alt="Leere Gasse eines Palettenregallagers mit folierten Paletten auf beiden Seiten">
+            <video data-sc-scrub data-sc-src="assets/lager.mp4" data-sc-src-mobile="assets/lager-m.mp4" muted playsinline></video>
+          </div>
+          <figcaption>Palettenregallager, Hennersdorf bei Wien.</figcaption>
+        </figure>
+        <div class="stat-stack">
+          <div class="stat" data-sc-cue="0.1 1 0 0.1" data-sc-rise="0">
+            <p class="stat__num"><span id="count-stellplaetze">0</span></p>
+            <p class="stat__label">Palettenstellplätze</p>
+            <p class="stat__line">Regallager, berechnet nach Ihrem monatlichen Bedarf.</p>
+          </div>
+          <div class="stat" data-sc-cue="0.22 0.95">
+            <p class="stat__label">Kleinteilelager</p>
+            <p class="stat__line">Für 5 bis 1.000 Positionen und mehr, kommissioniert auf Abruf.</p>
+          </div>
+          <div class="stat" data-sc-cue="0.34 1 0.3 0.1">
+            <p class="stat__label">EDV-Warenwirtschaft</p>
+            <p class="stat__line">Inventur und Warenkontrolle, Ihr Bestand jederzeit aktuell. Abfüllung auch BIO-zertifiziert.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leistungen: das Spektrum, kompakt gesetzt -->
+  <section id="leistungen" class="ch ch--paper leistungen">
+    <div class="sc-wrap">
+      <div class="svc-grid">
+        <div class="svc" data-sc-in data-sc-stagger="60">
+          <h3 class="sc-display sc-display--md" style="margin-bottom: var(--sc-6);">Was wir übernehmen</h3>
+          <dl>
+            <div><dt>Konfektionierung</dt><dd>Displays, Mischdisplays und Gift-Sets: Montage, Bestückung, Transportsicherung, Banderolieren und Sleeven.</dd></div>
+            <div><dt>Lohnarbeiten</dt><dd>Einschweißen, Skinnen und Einschrumpfen, Klebe-, Steck- und Heftarbeiten, Abfüllung auch BIO-zertifiziert, maschinell und per Hand.</dd></div>
+            <div><dt>Fulfillment &amp; E-Commerce</dt><dd>Lagerung, Kommissionierung, Versand und Retourenbearbeitung, mit laufender Bestandsinfo aus der Warenwirtschaft.</dd></div>
+            <div><dt>Konzeption</dt><dd>Verpackungsentwicklung von der Idee bis zur Fertigstellung: Promotionpakete, Samples und Gift-Boxen, praxisgerecht gedacht.</dd></div>
+            <div><dt>Spedition &amp; Transport</dt><dd>Wareneingangskontrolle, Versandkoordination und günstige Konditionen über unsere Partner.</dd></div>
+          </dl>
+        </div>
+        <div class="svc-figs">
+          <figure data-sc-reveal="up" data-sc-reveal-at="0.05 0.4">
+            <div class="fig-frame"><img src="assets/hands.webp" width="1200" height="1607" alt="Zwei Hände in Arbeitshandschuhen kleben ein Etikett auf einen kleinen Karton"></div>
+            <figcaption>Etikettierarbeiten, Kleinmengen per Hand.</figcaption>
+          </figure>
+          <figure data-sc-reveal="up" data-sc-reveal-at="0.05 0.4">
+            <div class="fig-frame"><img src="assets/displays.webp" width="1200" height="1607" alt="Fertig bestückte Kartondisplays in einer Reihe auf dem Hallenboden"></div>
+            <figcaption>Displays, montiert und bestückt.</figcaption>
+          </figure>
+        </div>
+      </div>
+      <figure class="band" data-sc-in>
+        <img src="assets/foil.webp" width="1800" height="565" alt="Nahaufnahme von straff gespannter Schrumpffolie über einer Kartonkante">
+        <figcaption>Versiegelt: Schrumpffolie über Karton, dicht bis in die Kante.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ KAPITEL: STIMMEN ============ -->
+  <section id="stimmen" class="ch ch--paper3 sc-section">
+    <div class="sc-wrap">
+      <div class="intertitle" data-sc-in>
+        <span class="sc-label">Kapitel drei</span>
+        <h2 class="sc-display">Was Kunden sagen</h2>
+      </div>
+      <div class="quotes">
+        <figure class="quote" data-sc-in>
+          <blockquote>Für einen meiner Social-Media-Kunden wurden kurzfristig und dringend Verpackungen für Merchandise-Artikel vor einem wichtigen Event benötigt.</blockquote>
+          <figcaption>
+            <span class="stars" aria-label="5 von 5 Sternen">★★★★★</span>
+            <cite>Twentysix-Media Agency · Google-Rezension</cite>
+          </figcaption>
+        </figure>
+        <figure class="quote quote--right" data-sc-in>
+          <blockquote>Zuverlässiger Partner für unser Business, sehr nette Mitarbeiter. Wir freuen uns, dass die Leute dort immer sehr spontan sind und uns auch in letzter Sekunde Ware aushändigen.</blockquote>
+          <figcaption>
+            <span class="stars" aria-label="5 von 5 Sternen">★★★★★</span>
+            <cite>Andreas Spindler · Google-Rezension</cite>
+          </figcaption>
+        </figure>
+      </div>
+      <p class="google-line" data-sc-in>Alle Rezensionen: <a href="https://maps.app.goo.gl/fFtZ2HsNawn8JC3C9" rel="noopener" target="_blank">LVS auf Google Maps</a></p>
+    </div>
+  </section>
+
+  <!-- ============ SCHLUSS: VERSANDBEREIT ============ -->
+  <section id="kontakt" class="ch ch--paper" data-sc-act="pin" data-sc-span="1.5">
+    <div data-sc-stage class="close-stage">
+      <div class="close-grid" data-sc-cue="0 1 0 0" data-sc-rise="0">
+        <div class="close-copy">
+          <h2 class="sc-display">Versandbereit.</h2>
+          <p>Sagen Sie uns, was zu packen ist. Ein Anruf genügt, den Rest übernehmen wir.</p>
+        </div>
+        <div class="label-card" id="label-card">
+          <div class="label-card__head">
+            <div>
+              <p class="sc-label" style="color: var(--sc-ink-soft); margin: 0 0 0.3rem;">Versandlabel</p>
+              <p class="name" style="margin: 0;">LVS Lohnverpackungsservice GmbH</p>
+            </div>
+            <span class="helmi-stamp"><img src="assets/logo.webp" width="1100" height="1058" alt="LVS-Logo: Helmi, der lachende Karton, darüber der Schriftzug Wir (ver)packen's"></span>
+          </div>
+          <div class="label-row"><span class="k">Von</span><span>Hauptstraße 13-15, 2332 Hennersdorf bei Wien</span></div>
+          <div class="label-row"><span class="k">An</span><span>Ihr nächstes Projekt</span></div>
+          <div class="label-row"><span class="k">Kontakt</span><span>Tel +43 2235 81204 · Mobil +43 664 149 36 36</span></div>
+          <a class="label-cta" href="tel:+43223581204">Jetzt anrufen</a>
+          <div class="barcode" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <section>
+      <h2>Information</h2>
+      <ul class="foot-links">
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="agb.html">AGB's</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </section>
+    <section>
+      <h2>Kontakt</h2>
+      <p class="foot-contact"><strong>LVS Lohnverpackungsservice GmbH</strong><br>Hauptstraße 13-15<br>2332 Hennersdorf</p>
+      <p class="foot-contact"><a href="tel:+43223581204">+43 2235 81204</a><br><a href="tel:+436641493636">+43 664 149 36 36</a></p>
+    </section>
+    <section>
+      <h2>Anfahrt</h2>
+      <div class="map-frame">
+        <div class="map-consent" data-map-src="https://www.google.com/maps?q=Hauptstra%C3%9Fe%2013-15%2C%202332%20Hennersdorf&output=embed">
+          <p>Die Karte wird erst nach Klick von Google Maps geladen. Dabei werden Daten (etwa Ihre IP-Adresse) an Google übertragen.</p>
+          <button type="button">Karte laden</button>
+          <a href="https://maps.app.goo.gl/fFtZ2HsNawn8JC3C9" rel="noopener" target="_blank">In Google Maps öffnen</a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <p class="site-footer__bottom"><span>© 2026 LVS Lohnverpackungsservice GmbH · Hennersdorf bei Wien</span><span>Wir (ver)packen's.</span></p>
+</footer>
+
+<script src="site.js"></script>
+<script src="scrollcraft.js"></script>
+<script>
+ScrollCraft.mount(document.body);
+
+/* ============ Bespoke: Lieferschein + Packstraße + Zähler ============
+   Alles hier liest nur --sc-p und Scrollpositionen. Die Engine bleibt unberührt. */
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var docket = document.getElementById('docket');
+  var rows = {};
+  docket.querySelectorAll('[data-station]').forEach(function (a) { rows[a.getAttribute('data-station')] = a; });
+
+  document.getElementById('docket-date').textContent =
+    new Date().toLocaleDateString('de-AT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+  var stamped = {};
+  function stamp(n) {
+    if (stamped[n]) return;
+    stamped[n] = true;
+    var a = rows[n];
+    if (a) a.classList.add('is-stamped');
+  }
+
+  var pack = document.getElementById('packstrasse');
+  var problem = document.getElementById('problem');
+  var betrieb = document.getElementById('betrieb');
+  var kontakt = document.getElementById('kontakt');
+  var stations = pack.querySelectorAll('.station');
+  var countEl = document.getElementById('count-stellplaetze');
+  var fmt = new Intl.NumberFormat('de-AT');
+  var countShown = null;
+
+  function p(el) {
+    var v = parseFloat(getComputedStyle(el).getPropertyValue('--sc-p'));
+    return isNaN(v) ? 0 : v;
+  }
+
+  function frame() {
+    var pp = p(pack);
+    stations.forEach(function (s) {
+      s.classList.toggle('is-on', pp >= parseFloat(s.getAttribute('data-on')) - 0.02);
+    });
+    if (pp >= 0.34) stamp(3);
+    if (pp >= 0.54) stamp(4);
+    if (pp >= 0.84) stamp(5);
+
+    var rp = problem.getBoundingClientRect();
+    if (rp.bottom < window.innerHeight * 0.55) stamp(2);
+
+    /* Zähler: echte Zahl, deutsches Format, läuft über den Akt-Fortschritt */
+    var bp = p(betrieb);
+    var t = Math.max(0, Math.min(1, (bp - 0.06) / 0.42));
+    var eased = 1 - Math.pow(1 - t, 3);
+    var val = Math.round(3000 * (reduce ? 1 : eased));
+    if (val !== countShown) { countShown = val; countEl.textContent = fmt.format(val); }
+
+    var kp = p(kontakt);
+    if (kp >= 0.04) stamp(6);
+    docket.classList.toggle('docket--gone', kp >= 0.3);
+
+    requestAnimationFrame(frame);
+  }
+
+  if (reduce) {
+    [1, 2, 3, 4, 5, 6].forEach(stamp);
+    countEl.textContent = fmt.format(3000);
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        ticking = false;
+        docket.classList.toggle('docket--gone', p(kontakt) >= 0.3);
+      });
+    }, { passive: true });
+  } else {
+    setTimeout(function () { stamp(1); }, 900);
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+</body>
+</html>
