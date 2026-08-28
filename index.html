@@ -235,15 +235,35 @@
     .cover__main { grid-template-columns: 1fr; }
     .cover__logo { width: 9rem; justify-self: start; order: -1; }
     .spread, .spread--flip, .svc-grid, .betrieb-grid, .close-grid { grid-template-columns: 1fr; }
-    .betrieb-grid { align-content: center; gap: 1.25rem; }
-    .pack-grid { grid-template-columns: 1fr; align-content: center; gap: 1rem; }
-    .parcel { width: min(78vw, 44vh); margin-inline: auto; }
-    .stations { gap: 0.6rem; }
+
+    /* Betrieb: echte Handys haben weniger svh als der Test-Browser. Kopf in den
+       Fluss, alles kompakt, damit die gepinnte Bühne nie clippt. */
+    .betrieb-head { position: static; inset: auto; padding-top: calc(var(--hdr-h) + 0.75rem); margin-bottom: 0.5rem; }
+    .betrieb-head .intertitle h2 { font-size: var(--sc-t-lg); }
+    .betrieb-grid { height: auto; gap: 0.9rem; }
+    .clipfig__frame { max-width: 84vw; }
+    .clipfig figcaption { display: none; }
+    .stat-stack { gap: 0.8rem; }
+    .stat { padding-top: 0.5rem; }
+    .stat__num { font-size: var(--sc-t-2xl); }
+    .stat__line { font-size: var(--sc-t-sm); margin-top: 0.1rem; }
+
+    /* Packstraße: gleiche Budget-Rechnung */
+    .pack-grid { grid-template-columns: 1fr; align-content: center; gap: 0.75rem; padding-block: calc(var(--hdr-h) + 0.75rem) 0.75rem; }
+    .parcel { width: min(64vw, 34vh); margin-inline: auto; }
+    .stations { gap: 0.5rem; }
     .station__note { display: none; }
     .station__name { font-size: var(--sc-t-base); }
-    .pack-close .sc-display { font-size: var(--sc-t-xl); }
+    .pack-close { margin-top: 0.75rem; }
+    .pack-close .sc-display { font-size: var(--sc-t-lg); }
+
+    /* Schluss kompakt */
+    .close-copy h2 { font-size: var(--sc-t-2xl); }
+    .close-copy p { font-size: var(--sc-t-base); }
+    .close-grid { gap: 1.25rem; }
+    .label-card { gap: 0.8rem; }
+
     .quote--right { margin-left: 0; }
-    .close-foot { position: static; padding: var(--sc-5) 0 0; }
   }
 
   /* ================= Reduzierte Bewegung ================= */
