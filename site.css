@@ -233,6 +233,21 @@ figcaption {
   box-shadow: 0 2px 4px hsl(45 60% 20% / 0.15), 0 12px 28px -8px hsl(45 60% 20% / 0.25);
 }
 .map-frame iframe { display: block; width: 100%; aspect-ratio: 16 / 10; border: 0; }
+.map-still { position: relative; display: block; }
+.map-still img { display: block; width: 100%; height: auto; }
+.map-still span {
+  position: absolute; right: 0.6rem; bottom: 0.6rem;
+  font-family: var(--sc-font-mono); font-size: var(--sc-t-xs); font-weight: 600;
+  color: var(--sc-surface); background: var(--lvs-blue);
+  padding: 0.4em 0.9em; border-radius: var(--sc-r-sm);
+  transition: background 140ms var(--sc-ease-out);
+}
+.map-still:hover span { background: #0A3AA0; }
+.map-attrib {
+  margin: 0.45rem 0 0; text-align: right;
+  font-family: var(--sc-font-mono); font-size: 0.62rem; color: #4A5266;
+}
+.map-attrib a { color: #4A5266; }
 .map-consent {
   aspect-ratio: 16 / 10;
   display: grid; place-content: center; gap: var(--sc-3);
